@@ -1,0 +1,5 @@
+json
+requests
+os
+dotenv
+API KEY in .env
