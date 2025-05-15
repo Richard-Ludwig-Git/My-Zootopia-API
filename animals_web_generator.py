@@ -45,10 +45,14 @@ def serialize_animal(animal):
 def combine_data_template(user_animal_input):
     animals_data = load_data(user_animal_input)
     template = load_template("animals_template.html")
-    output = ""
-    for animal in animals_data:
-        output += serialize_animal(animal)
-    temp_with_data = template.replace("__REPLACE_ANIMALS_INFO__", output)
+    if len(animals_data) <= 2:
+        output = f"<h2>The animal {user_animal_input} doesn't exist.</h2>"
+        temp_with_data = template.replace("__REPLACE_ANIMALS_INFO__", output)
+    if len(animals_data) > 2:
+        output = ""
+        for animal in animals_data:
+            output += serialize_animal(animal)
+        temp_with_data = template.replace("__REPLACE_ANIMALS_INFO__", output)
     return temp_with_data
 
 
