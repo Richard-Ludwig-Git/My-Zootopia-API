@@ -1,14 +1,4 @@
-import json
-import requests
-
-
-def load_data(user_animal_input):
-    """ Gets Data from API """
-    API_KEY = 'UN4D5vRBaN8ybUMEfq5x3g==OQ4jGHiWAkmE0Zxf'
-    SEARCH = user_animal_input
-    url = f'https://api.api-ninjas.com/v1/animals?name={SEARCH}'
-    res = requests.get(url, headers={'X-Api-Key': API_KEY})
-    return json.loads(res.text)
+import data_fetcher
 
 
 def load_template(file_path):
@@ -43,7 +33,7 @@ def serialize_animal(animal):
 
 
 def combine_data_template(user_animal_input):
-    animals_data = load_data(user_animal_input)
+    animals_data = data_fetcher.fetch_data(user_animal_input)
     template = load_template("animals_template.html")
     if len(animals_data) <= 2:
         output = f"<h2>The animal {user_animal_input} doesn't exist.</h2>"
