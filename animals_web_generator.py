@@ -2,10 +2,10 @@ import json
 import requests
 
 
-def load_data():
+def load_data(user_animal_input):
     """ Gets Data from API """
     API_KEY = 'UN4D5vRBaN8ybUMEfq5x3g==OQ4jGHiWAkmE0Zxf'
-    SEARCH = "Fox"
+    SEARCH = user_animal_input
     url = f'https://api.api-ninjas.com/v1/animals?name={SEARCH}'
     res = requests.get(url, headers={'X-Api-Key': API_KEY})
     return json.loads(res.text)
@@ -42,8 +42,8 @@ def serialize_animal(animal):
     return output
 
 
-def combine_data_template():
-    animals_data = load_data()
+def combine_data_template(user_animal_input):
+    animals_data = load_data(user_animal_input)
     template = load_template("animals_template.html")
     output = ""
     for animal in animals_data:
@@ -53,8 +53,9 @@ def combine_data_template():
 
 
 def main():
-    temp_with_data = combine_data_template()
-    with open("animals2.html", "w") as makepage:
+    user_animal_input = input("Search for Animal: ")
+    temp_with_data = combine_data_template(user_animal_input)
+    with open(f"animal_repository_{user_animal_input}.html", "w") as makepage:
         makepage.write(temp_with_data)
 
 
